@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Threat Model Report — {{ system_name }}</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; padding: 2rem; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .header { background: #1a1a2e; color: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem; }
+    .header h1 { font-size: 22px; font-weight: 500; margin-bottom: 6px; }
+    .header p { font-size: 13px; opacity: 0.7; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 2rem; }
+    .stat { background: white; border-radius: 8px; padding: 1rem; text-align: center; border: 0.5px solid #e0e0e0; }
+    .stat-number { font-size: 28px; font-weight: 500; }
+    .stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+    .critical { color: #c0392b; }
+    .high { color: #e67e22; }
+    .medium { color: #f39c12; }
+    .low { color: #27ae60; }
+    .section-title { font-size: 16px; font-weight: 500; margin-bottom: 1rem; }
+    .threat { background: white; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 10px; border: 0.5px solid #e0e0e0; border-left: 4px solid #ccc; }
+    .threat.CRITICAL { border-left-color: #c0392b; }
+    .threat.HIGH { border-left-color: #e67e22; }
+    .threat.MEDIUM { border-left-color: #f39c12; }
+    .threat.LOW { border-left-color: #27ae60; }
+    .threat-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+    .badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 10px; }
+    .badge.CRITICAL { background: #fdecea; color: #c0392b; }
+    .badge.HIGH { background: #fef3e2; color: #e67e22; }
+    .badge.MEDIUM { background: #fef9e7; color: #f39c12; }
+    .badge.LOW { background: #f0faf4; color: #27ae60; }
+    .stride-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #eef2ff; color: #3b5bdb; }
+    .component-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #f5f5f5; color: #666; }
+    .threat-desc { font-size: 13px; color: #444; margin: 4px 0; }
+    .mitre { font-size: 12px; color: #3b5bdb; margin: 4px 0; }
+    .control { font-size: 12px; color: #27ae60; background: #f0faf4; padding: 6px 10px; border-radius: 4px; margin-top: 6px; }
+    .control::before { content: "Control: "; font-weight: 500; }
+    .back-btn { display: inline-block; margin-bottom: 1.5rem; padding: 8px 16px; background: white; border: 0.5px solid #e0e0e0; border-radius: 6px; font-size: 13px; text-decoration: none; color: #1a1a1a; }
+    .back-btn:hover { background: #f5f5f5; }
+    .footer { text-align: center; font-size: 12px; color: #999; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="back-btn">← Generate New Model</a>
+
+  <div class="header">
+    <h1>Threat Model — {{ system_name }}</h1>
+    <p>Generated: {{ generated_at }} | Sensitivity: {{ data_sensitivity | title }} | Components: {{ components | join(', ') }}</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-number critical">{{ summary.CRITICAL }}</div><div class="stat-label">Critical</div></div>
+    <div class="stat"><div class="stat-number high">{{ summary.HIGH }}</div><div class="stat-label">High</div></div>
+    <div class="stat"><div class="stat-number medium">{{ summary.MEDIUM }}</div><div class="stat-label">Medium</div></div>
+    <div class="stat"><div class="stat-number low">{{ summary.LOW }}</div><div class="stat-label">Low</div></div>
+  </div>
+
+  <div class="section-title">STRIDE Threat Analysis — {{ threats | length }} threats identified</div>
+
+  {% for threat in threats %}
+  <div class="threat {{ threat.risk }}">
+    <div class="threat-header">
+      <span class="badge {{ threat.risk }}">{{ threat.risk }}</span>
+      <span class="stride-badge">{{ threat.category }}</span>
+      <span class="component-badge">{{ threat.component }}</span>
+    </div>
+    <div class="threat-desc">{{ threat.threat }}</div>
+    <div class="mitre">MITRE ATT&CK: {{ threat.mitre }}</div>
+    <div class="control">{{ threat.control }}</div>
+  </div>
+  {% endfor %}
+
+  <div class="footer">Threat Model Generator — Built by Amarjeet Kaur Dhillon</div>
+</div>
+</body>
+</html>
