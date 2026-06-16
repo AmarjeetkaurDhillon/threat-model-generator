@@ -83,6 +83,9 @@ All 7 tests passing:
 ## Author
 
 Amarjeet Kaur Dhillon — MSc Cyber Security, University of Southampton
+
 Amazon AWS DC Security Specialist Intern (Sep 2026)
+
 [LinkedIn](https://www.linkedin.com/in/amarjeet-kaur-dhillon-545672214)
+
 [GitHub](https://github.com/AmarjeetkaurDhillon)
