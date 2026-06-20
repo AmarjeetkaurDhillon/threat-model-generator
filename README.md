@@ -2,6 +2,8 @@
 
 A Flask web application that generates STRIDE-based threat models with MITRE ATT&CK mappings for system components, producing severity-ranked security reports with remediation controls.
 
+🌐 **Live Demo:** https://threat-model-generator.onrender.com
+
 ## Demo
 
 ### Input Form
